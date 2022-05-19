@@ -124,6 +124,16 @@
         var nr_o_grades = [0, 0];
         var nr_v_grades = [0, 0];
         setInterval(function () {
+            //respect the limits
+            if(grades.value > grades.max){
+                grades.value = grades.max;
+            }
+            if(o_grades.value > o_grades.max){
+                o_grades.value = o_grades.max;
+            }
+            if(v_grades.value > v_grades.max){
+                v_grades.value = v_grades.max;
+            }
             //create new grade inputs
             while (grades.value > nr_grades[0]) {
                 var i = createInput("grades_", nr_grades[0]);
