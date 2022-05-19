@@ -125,13 +125,13 @@
         var nr_v_grades = [0, 0];
         setInterval(function () {
             //respect the limits
-            if(grades.value > grades.max){
+            if(parseInt(grades.value) > parseInt(grades.max)){
                 grades.value = grades.max;
             }
-            if(o_grades.value > o_grades.max){
+            if(parseInt(o_grades.value) > parseInt(o_grades.max)){
                 o_grades.value = o_grades.max;
             }
-            if(v_grades.value > v_grades.max){
+            if(parseInt(v_grades.value) > parseInt(v_grades.max)){
                 v_grades.value = v_grades.max;
             }
             //create new grade inputs
