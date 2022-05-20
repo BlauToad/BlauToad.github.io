@@ -41,7 +41,8 @@
                 <a id="_v_average" class="average">0</a>
             </div>
         </div>
-        <a id="_total_average">0</a>
+        <a id="_total_average" style="background-color: aqua;">0</a>
+        <a id="_total_average_r" style="background-color: lime;">0</a>
     </div>
 
     <style>
@@ -61,7 +62,6 @@
         }
 
         .big>a{
-            background-color: aqua;
             display: block;
             width: 89%;
             border-radius: 10px;
@@ -116,6 +116,7 @@
         var o_average = document.getElementById("_o_average");
         var v_average = document.getElementById("_v_average");
         var t_average = document.getElementById("_total_average");
+        var t_average_r = document.getElementById("_total_average_r");
         var slider_percentage = document.getElementById("_grade_percentage");
         var g_percentage = document.getElementById("_g_percentage");
         var o_percentage = document.getElementById("_og_percentage");
@@ -192,7 +193,9 @@
             g_percentage.innerHTML = slider_percentage.value + "%"
             o_percentage.innerHTML = (100 - slider_percentage.value) + "%"
             //total average
-            t_average.innerHTML = parseFloat(g_average.innerHTML) * (slider_percentage.value/100) + parseFloat(o_average.innerHTML) * ((100 - slider_percentage.value)/100)
+            var a =parseFloat(g_average.innerHTML) * (slider_percentage.value/100) + parseFloat(o_average.innerHTML) * ((100 - slider_percentage.value)/100);
+            t_average.innerHTML = a;
+            t_average_r.innerHTML = Math.round(a);
             //gotVariable
             if(gotVariables){
                 for (let index = 0; index < xx_grades[0].length; index++) {
