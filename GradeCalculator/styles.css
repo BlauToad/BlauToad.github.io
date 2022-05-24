@@ -1,0 +1,55 @@
+body {
+    background-color: #aaa;
+}
+
+.slider {
+    margin-left: 1%;
+    width: 60%;
+}
+
+.big {
+    background-color: #888a;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.big>a {
+    display: block;
+    width: 89%;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin: 10px;
+}
+
+.outer {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 20px;
+}
+
+.outer>div {
+    display: inline-block;
+    width: 30%;
+    background-color: #fffa;
+    border-radius: 5px;
+    padding: 0.5%;
+    position: relative;
+    vertical-align: top;
+}
+
+.outer>div>* {
+    width: 95%;
+}
+
+.outer>div>div>* {
+    width: 100%;
+}
+
+.average {
+    background-color: #f00;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+}

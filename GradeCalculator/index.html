@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="script" href="script.js">
+    <title>GradeCalculator</title>
+</head>
+
+<body>
+    <div class="big">
+        <input type="range" min="0" max="100" value="50" class="slider" id="_grade_percentage">
+        <div class="outer">
+            <div>
+                <a id="_g_percentage">50%</a>
+                <a>Grades:</a>
+                <input id="_grades" title="Nr. of Grades" type="number" value="0" min="0" max="69">
+                <br><br>
+                <div id="_g">
+                </div>
+                <input id="_voc_average" title="VocAverage" type="number" disabled style="display: none;">
+                <br>
+                <a id="_g_average" class="average">0</a>
+            </div>
+            <div>
+                <a id="_og_percentage">50%</a>
+                <a>Oral Grades:</a>
+                <input id="_o_grades" title="Nr. of Oral Grades" type="number" value="0" min="0" max="69">
+                <br><br>
+                <div id="_og">
+                </div>
+                <br>
+                <a id="_o_average" class="average">0</a>
+            </div>
+            <div>
+                <a>Vocab Grades:</a>
+                <input id="_v_grades" title="Nr. of Vocab Grades" type="number" value="0" min="0" max="69">
+                <br><br>
+                <div id="_vg">
+                </div>
+                <br>
+                <a id="_v_average" class="average">0</a>
+            </div>
+        </div>
+        <a id="_total_average" style="background-color: aqua;">0</a>
+        <a id="_total_average_r" style="background-color: lime;">0</a>
+    </div>
+</body>
+
+</html>
