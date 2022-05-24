@@ -193,7 +193,6 @@ function writeEById(prefix, id, value) {
     if(document.cookie.startsWith("Grades=")){
         big.style.display = "none";
     }else{
-        document.cookie = "Grades=";
     }
 
     var v = window.location.search.split("?");
