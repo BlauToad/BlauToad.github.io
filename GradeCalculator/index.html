@@ -4,12 +4,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
-    <link rel="script" href="script.js">
     <title>GradeCalculator</title>
 </head>
 
 <body>
-    <div class="big">
+    <div id="select_dropdown"></div>
+    <div class="big" id="big">
         <input type="range" min="0" max="100" value="50" class="slider" id="_grade_percentage">
         <div class="outer">
             <div>
@@ -45,6 +45,7 @@
         </div>
         <a id="_total_average" style="background-color: aqua;">0</a>
         <a id="_total_average_r" style="background-color: lime;">0</a>
+        <script src="script.js"></script>
     </div>
 </body>
 

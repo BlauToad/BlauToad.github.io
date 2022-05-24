@@ -15,6 +15,8 @@ var t_average_r = document.getElementById("_total_average_r");
 var slider_percentage = document.getElementById("_grade_percentage");
 var g_percentage = document.getElementById("_g_percentage");
 var o_percentage = document.getElementById("_og_percentage");
+var select_dropdown = document.getElementById("select_dropdown");
+var big = document.getElementById("big");
 
 var nr_grades = [0, 0];
 var nr_o_grades = [0, 0];
@@ -188,6 +190,12 @@ function writeEById(prefix, id, value) {
 
 
 {
+    if(document.cookie.startsWith("Grades=")){
+        big.style.display = "none";
+    }else{
+        document.cookie = "Grades=";
+    }
+
     var v = window.location.search.split("?");
     v.forEach(element => {
         var e = element.split("=");
