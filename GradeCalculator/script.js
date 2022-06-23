@@ -15,6 +15,7 @@ var t_average_r = document.getElementById("_total_average_r");
 var slider_percentage = document.getElementById("_grade_percentage");
 var g_percentage = document.getElementById("_g_percentage");
 var o_percentage = document.getElementById("_og_percentage");
+var save_cookie = document.getElementById("_save_cookies");
 
 var nr_grades = [0, 0];
 var nr_o_grades = [0, 0];
@@ -153,13 +154,15 @@ setInterval(function () {
     //history.replaceState({ id: 'Grade Calculator', source: 'JS' }, "Grade Calculator", temp_string);
 
     // replace cookie
-    const d = new Date();
-    d.setTime(d.getTime() + (365*24*60*60*1000));
-    temp_string += "; expires="+d.toUTCString()+"; ";
-    document.cookie = temp_string;
+    if(save_cookie.checked == true){
+        const d = new Date();
+        d.setTime(d.getTime() + (365*24*60*60*1000));
+        temp_string += "; expires="+d.toUTCString()+"; ";
+        document.cookie = temp_string;
 
-    document.cookie.SameSite = SameSiteMode.None;
-    document.cookie.Secure = true;
+        document.cookie.SameSite = SameSiteMode.None;
+        document.cookie.Secure = true;
+    }
 }, 500)
 
 function calcAverage(prefix, max_id, additional_summands) {
@@ -259,7 +262,7 @@ function writeEById(prefix, id, value) {
 }
 
 {
-    if(cook){
-
+    if(getCookie("data") !== ""){
+        save_cookie.checked = true;
     }
 }

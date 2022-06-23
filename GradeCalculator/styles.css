@@ -53,3 +53,12 @@ body {
     padding-right: 10px;
     margin-left: 10px;
 }
+
+.scib {
+    display: inline-block;
+    background-color: #fffa;
+    border-radius: 5px;
+    padding: 0.5%;
+    position: relative;
+    vertical-align: top;
+}
