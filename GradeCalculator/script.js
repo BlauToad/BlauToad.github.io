@@ -111,39 +111,55 @@ setInterval(function () {
 
 setInterval(function () {
     //changeURL
-    var url = window.location.origin + window.location.pathname;
-    url += "?percentage=" + slider_percentage.value;
+    //var temp_string = window.location.origin + window.location.pathname;
+    //var prefix = "?";
+
+    //change cookie
+    var temp_string = "data=";
+    var prefix = "?";
+
+    temp_string += prefix+"percentage=" + slider_percentage.value;
     if (grades.value > 0) {
-        url += "?grades=[";
+        temp_string += prefix+"grades=[";
         for (let index = 0; index < grades.value; index++) {
             const element = findEById("grades_", index).value;
-            url += element;
-            url += ","
+            temp_string += element;
+            temp_string += ","
         }
-        url = url.slice(0, url.length - 1);
-        url += "]";
+        temp_string = temp_string.slice(0, temp_string.length - 1);
+        temp_string += "]";
     }
     if (o_grades.value > 0) {
-        url += "?ogrades=[";
+        temp_string += prefix+"ogrades=[";
         for (let index = 0; index < o_grades.value; index++) {
             const element = findEById("ogradeso_", index).value;
-            url += element;
-            url += ","
+            temp_string += element;
+            temp_string += ","
         }
-        url = url.slice(0, url.length - 1);
-        url += "]";
+        temp_string = temp_string.slice(0, temp_string.length - 1);
+        temp_string += "]";
     }
     if (v_grades.value > 0) {
-        url += "?vgrades=[";
+        temp_string += prefix+"vgrades=[";
         for (let index = 0; index < v_grades.value; index++) {
             const element = findEById("vgradesv_", index).value;
-            url += element;
-            url += ","
+            temp_string += element;
+            temp_string += ","
         }
-        url = url.slice(0, url.length - 1);
-        url += "]";
+        temp_string = temp_string.slice(0, temp_string.length - 1);
+        temp_string += "]";
     }
-    history.replaceState({ id: 'Grade Calculator', source: 'JS' }, "Grade Calculator", url);
+    //replace url
+    //history.replaceState({ id: 'Grade Calculator', source: 'JS' }, "Grade Calculator", temp_string);
+
+    // replace cookie
+    const d = new Date();
+    d.setTime(d.getTime() + (365*24*60*60*1000));
+    temp_string += "; expires="+d.toUTCString()+"; ";
+    document.cookie = temp_string;
+
+    document.cookie.SameSite = SameSiteMode.None;
+    document.cookie.Secure = true;
 }, 500)
 
 function calcAverage(prefix, max_id, additional_summands) {
@@ -178,6 +194,22 @@ function createInput(prefix, suffix) {
     return input;
 }
 
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
+
 function findEById(prefix, id) {
     return document.getElementById(prefix + id + "_");
 }
@@ -188,7 +220,8 @@ function writeEById(prefix, id, value) {
 
 
 {
-    var v = window.location.search.split("?");
+    //var v = window.location.search.split("?");
+    var v = getCookie('data').split("?");
     v.forEach(element => {
         var e = element.split("=");
         switch (e[0]) {
@@ -223,4 +256,10 @@ function writeEById(prefix, id, value) {
                 break;
         }
     });
+}
+
+{
+    if(cook){
+
+    }
 }
