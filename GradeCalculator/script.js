@@ -237,7 +237,7 @@ function loadData(v) {
                 grades.value = f.length;
                 xx_grades[0] = f;
                 gotVariables = true;
-                console.log(f);
+                //console.log(f);
                 break;
             case "ogrades":
                 var f = e[1].replace("[", "").replace("]", "").split(",");
@@ -245,7 +245,7 @@ function loadData(v) {
                 o_grades.value = f.length;
                 xx_grades[1] = f;
                 gotVariables = true;
-                console.log(f);
+                //console.log(f);
                 break;
             case "vgrades":
                 var f = e[1].replace("[", "").replace("]", "").split(",");
@@ -253,7 +253,7 @@ function loadData(v) {
                 v_grades.value = f.length;
                 xx_grades[2] = f;
                 gotVariables = true;
-                console.log(f);
+                //console.log(f);
                 break;
             case "subjects":
                 var f = e[1].replace("[", "").replace("]", "").split(",");
@@ -262,7 +262,7 @@ function loadData(v) {
                 for (let index = 0; index < f.length; index++) {
                     createSubject(f[index]);
                 }
-                console.log(f);
+                //console.log(f);
                 break;
             default:
                 break;
@@ -310,7 +310,7 @@ function create_new_saved_subject() {
 }
 
 function switch_subject(a) {
-    console.log(a);
+    //console.log(a);
     DATA_CURRENT_SUBJET = a;
     loadData(a);
 }
