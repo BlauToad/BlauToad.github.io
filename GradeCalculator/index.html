@@ -4,6 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dropdown.css">
     <title>GradeCalculator</title>
 </head>
 
@@ -46,10 +47,28 @@
         <a id="_total_average_r" style="background-color: lime;">0</a>
         <div class="scib">
             <a>Save Grades in your Browser?</a>
-            <input type="checkbox" id="_save_cookies">
-            <script src="script.js"></script>
+            <br>
+            <a>THIS USES LOCALSTORAGE!</a>
+            <input type="checkbox" id="_save_localstorage">
+            <br>
+            <!-- Dropdown -->
+            <div class="dropdown">
+                <button class="dropbtn" id="_saved_subjects_btn" hidden>Saved Subjects</button>
+                <div class="dropdown-content" id="_saved_subjects">
+                    <form onsubmit="create_new_saved_subject(); return false;">
+                        <div style="display: flex;">
+                            <input type="text" id="_nos" placeholder="Name of new subject" required>
+                            <input type="submit" value="Create new"></button>
+                        </div>
+                    </form>
+                </div>
+                <br>
+            </div>
+            <br>
+            <!-- Dropdown -->
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

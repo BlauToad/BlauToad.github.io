@@ -1,5 +1,13 @@
-var xx_grades = [[], [], []]
+var xx_grades = [
+    [],
+    [],
+    []
+]
 var gotVariables = false;
+var DATA_SAVED_SUBJECTS = "";
+var DATA_CURRENT_SUBJET = "Default";
+var subjects = [];
+var subjects_name = [];
 var g = document.getElementById("_g");
 var og = document.getElementById("_og");
 var vg = document.getElementById("_vg");
@@ -15,7 +23,10 @@ var t_average_r = document.getElementById("_total_average_r");
 var slider_percentage = document.getElementById("_grade_percentage");
 var g_percentage = document.getElementById("_g_percentage");
 var o_percentage = document.getElementById("_og_percentage");
-var save_cookie = document.getElementById("_save_cookies");
+var save_localstorage = document.getElementById("_save_localstorage");
+var saved_subjects = document.getElementById("_saved_subjects");
+var saved_subjects_btn = document.getElementById("_saved_subjects_btn");
+var nos = document.getElementById("_nos");
 
 var nr_grades = [0, 0];
 var nr_o_grades = [0, 0];
@@ -115,13 +126,13 @@ setInterval(function () {
     //var temp_string = window.location.origin + window.location.pathname;
     //var prefix = "?";
 
-    //change cookie
-    var temp_string = "data=";
+    //change localstorage
+    var temp_string = "";
     var prefix = "?";
 
-    temp_string += prefix+"percentage=" + slider_percentage.value;
+    temp_string += prefix + "percentage=" + slider_percentage.value;
     if (grades.value > 0) {
-        temp_string += prefix+"grades=[";
+        temp_string += prefix + "grades=[";
         for (let index = 0; index < grades.value; index++) {
             const element = findEById("grades_", index).value;
             temp_string += element;
@@ -131,7 +142,7 @@ setInterval(function () {
         temp_string += "]";
     }
     if (o_grades.value > 0) {
-        temp_string += prefix+"ogrades=[";
+        temp_string += prefix + "ogrades=[";
         for (let index = 0; index < o_grades.value; index++) {
             const element = findEById("ogradeso_", index).value;
             temp_string += element;
@@ -141,7 +152,7 @@ setInterval(function () {
         temp_string += "]";
     }
     if (v_grades.value > 0) {
-        temp_string += prefix+"vgrades=[";
+        temp_string += prefix + "vgrades=[";
         for (let index = 0; index < v_grades.value; index++) {
             const element = findEById("vgradesv_", index).value;
             temp_string += element;
@@ -153,15 +164,16 @@ setInterval(function () {
     //replace url
     //history.replaceState({ id: 'Grade Calculator', source: 'JS' }, "Grade Calculator", temp_string);
 
-    // replace cookie
-    if(save_cookie.checked == true){
-        const d = new Date();
-        d.setTime(d.getTime() + (365*24*60*60*1000));
-        temp_string += "; expires="+d.toUTCString()+"; ";
-        document.cookie = temp_string;
-
-        document.cookie.SameSite = SameSiteMode.None;
-        document.cookie.Secure = true;
+    // replace localstorage
+    if (save_localstorage.checked == true) {
+        //document.cookie = temp_string;
+        localStorage.setItem(DATA_CURRENT_SUBJET, temp_string);
+        localStorage.setItem("__subjects","?subjects=["+subjects_name.toString()+"]")
+        localStorage.setItem("__localstorage","true");
+        saved_subjects_btn.hidden = false;
+    } else {
+        localStorage.removeItem("__localstorage");
+        saved_subjects_btn.hidden = true;
     }
 }, 500)
 
@@ -197,22 +209,6 @@ function createInput(prefix, suffix) {
     return input;
 }
 
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-}
-
 function findEById(prefix, id) {
     return document.getElementById(prefix + id + "_");
 }
@@ -222,9 +218,13 @@ function writeEById(prefix, id, value) {
 }
 
 
-{
+function loadData(v) {
     //var v = window.location.search.split("?");
-    var v = getCookie('data').split("?");
+    v = localStorage.getItem(v);
+    if (v == null) {
+        v = "?percentage=50?grades=[]?ogrades=[]?vgrades=[]";
+    }
+    v = v.split("?");
     v.forEach(element => {
         var e = element.split("=");
         switch (e[0]) {
@@ -255,14 +255,64 @@ function writeEById(prefix, id, value) {
                 gotVariables = true;
                 console.log(f);
                 break;
+            case "subjects":
+                var f = e[1].replace("[", "").replace("]", "").split(",");
+                if (f[0] == "" && f.length == 1) { f = [] }
+                v_grades.value = f.length;
+                for (let index = 0; index < f.length; index++) {
+                    createSubject(f[index]);
+                }
+                console.log(f);
+                break;
             default:
                 break;
         }
     });
+
+}
+
+function createSubject(name) {
+    const regex = /[^A-Za-z0-9]/g;
+    name = name.replace(regex, "");
+    var s = true;
+    if (name != "") {
+        for (let index = 0; index < subjects.length; index++) {
+            if (subjects[index] == name.toLowerCase()) {
+                s = false;
+            }
+        }
+
+        if (s == true) {
+            subjects.push(name.toLowerCase());
+            subjects_name.push(name);
+
+            var btn = document.createElement("button");
+            btn.innerHTML = name;
+            //btn.addEventListener("click",switch_subject)
+            btn.setAttribute("onclick", "switch_subject(\"" + name + "\");")
+            saved_subjects.appendChild(btn);
+        }
+    }
+
 }
 
 {
-    if(getCookie("data") !== ""){
-        save_cookie.checked = true;
+    if (localStorage.getItem("__localstorage") == "true") {
+        save_localstorage.checked = true;
+        loadData("__subjects");
     }
 }
+
+function create_new_saved_subject() {
+    if (nos.value !== "") {
+        createSubject(nos.value);
+    }
+}
+
+function switch_subject(a) {
+    console.log(a);
+    DATA_CURRENT_SUBJET = a;
+    loadData(a);
+}
+
+loadData(DATA_CURRENT_SUBJET);

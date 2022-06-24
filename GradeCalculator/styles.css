@@ -1,15 +1,17 @@
 body {
     background-color: #aaa;
+    padding: 1%;
 }
 
 .slider {
     margin-left: 1%;
-    width: 60%;
+    width: 64.22%;
 }
 
 .big {
     background-color: #888a;
-    padding: 10px;
+    padding: 1%;
+    margin: 0%;
     border-radius: 10px;
 }
 
@@ -30,7 +32,7 @@ body {
 
 .outer>div {
     display: inline-block;
-    width: 30%;
+    width: 31.66%;
     background-color: #fffa;
     border-radius: 5px;
     padding: 0.5%;
@@ -61,4 +63,5 @@ body {
     padding: 0.5%;
     position: relative;
     vertical-align: top;
+    margin-bottom: 300px;
 }
