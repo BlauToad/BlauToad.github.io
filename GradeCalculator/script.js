@@ -317,7 +317,7 @@ function switch_subject(a) {
     loadData(a);
 }
 
-createSubject("Default");
+createSubject("default");
 loadData(DATA_CURRENT_SUBJET);
 
 
