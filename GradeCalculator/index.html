@@ -10,11 +10,33 @@
 
 <body>
     <div class="big">
+        <div class="scib">
+            <a id="*TEXT*sgiyb" title="This will use your Browsers local storage!" style="cursor: help;">Save Grades in your Browser?</a>
+            <input type="checkbox" id="_save_localstorage">
+            <br>
+            <br>
+            <!-- Dropdown -->
+            <div class="dropdown">
+                <button class="dropbtn" id="_saved_subjects_btn" hidden>Saved Subjects</button>
+                <div class="dropdown-content" id="_saved_subjects">
+                    <form onsubmit="create_new_saved_subject(); return false;">
+                        <div style="display: flex;">
+                            <input type="text" id="_nos" placeholder="Name of new subject" required>
+                            <input type="submit" id="*TEXT*cn" value="Create new"></button>
+                        </div>
+                    </form>
+                </div>
+                <br>
+            </div>
+            <br>
+            <!-- Dropdown -->
+        </div>
+        <br>
         <input type="range" min="0" max="100" value="50" class="slider" id="_grade_percentage">
         <div class="outer">
             <div>
                 <a id="_g_percentage">50%</a>
-                <a>Number of Grades:</a>
+                <a id="*TEXT*nog">Number of Grades:</a>
                 <input id="_grades" title="Nr. of Grades" type="number" value="0" min="0" max="69">
                 <br><br>
                 <div id="_g">
@@ -25,7 +47,7 @@
             </div>
             <div>
                 <a id="_og_percentage">50%</a>
-                <a>Number of Oral Grades:</a>
+                <a id="*TEXT*noog">Number of Oral Grades:</a>
                 <input id="_o_grades" title="Nr. of Oral Grades" type="number" value="0" min="0" max="69">
                 <br><br>
                 <div id="_og">
@@ -34,7 +56,7 @@
                 <a id="_o_average" class="average">0</a>
             </div>
             <div>
-                <a>Number of Vocab Grades:</a>
+                <a id="*TEXT*novg">Number of Vocab Grades:</a>
                 <input id="_v_grades" title="Nr. of Vocab Grades" type="number" value="0" min="0" max="69">
                 <br><br>
                 <div id="_vg">
@@ -45,28 +67,6 @@
         </div>
         <a id="_total_average" style="background-color: aqua;">0</a>
         <a id="_total_average_r" style="background-color: lime;">0</a>
-        <div class="scib">
-            <a>Save Grades in your Browser?</a>
-            <br>
-            <a>THIS USES LOCALSTORAGE!</a>
-            <input type="checkbox" id="_save_localstorage">
-            <br>
-            <!-- Dropdown -->
-            <div class="dropdown">
-                <button class="dropbtn" id="_saved_subjects_btn" hidden>Saved Subjects</button>
-                <div class="dropdown-content" id="_saved_subjects">
-                    <form onsubmit="create_new_saved_subject(); return false;">
-                        <div style="display: flex;">
-                            <input type="text" id="_nos" placeholder="Name of new subject" required>
-                            <input type="submit" value="Create new"></button>
-                        </div>
-                    </form>
-                </div>
-                <br>
-            </div>
-            <br>
-            <!-- Dropdown -->
-        </div>
     </div>
     <script src="script.js"></script>
 </body>

@@ -5,7 +5,7 @@ var xx_grades = [
 ]
 var gotVariables = false;
 var DATA_SAVED_SUBJECTS = "";
-var DATA_CURRENT_SUBJET = "Default";
+var DATA_CURRENT_SUBJET = "default";
 var subjects = [];
 var subjects_name = [];
 var g = document.getElementById("_g");
@@ -27,6 +27,8 @@ var save_localstorage = document.getElementById("_save_localstorage");
 var saved_subjects = document.getElementById("_saved_subjects");
 var saved_subjects_btn = document.getElementById("_saved_subjects_btn");
 var nos = document.getElementById("_nos");
+
+var userLang = navigator.language || navigator.userLanguage;
 
 var nr_grades = [0, 0];
 var nr_o_grades = [0, 0];
@@ -315,4 +317,33 @@ function switch_subject(a) {
     loadData(a);
 }
 
+createSubject("Default");
 loadData(DATA_CURRENT_SUBJET);
+
+
+translateTexts(userLang);
+
+function translateTexts(userLang){
+    var nog = document.getElementById("*TEXT*nog");
+    var noog = document.getElementById("*TEXT*noog");
+    var novg = document.getElementById("*TEXT*novg");
+    var sgiyb = document.getElementById("*TEXT*sgiyb");
+    var cn = document.getElementById("*TEXT*cn");
+
+    switch (userLang) {
+        case "de":
+            nog.innerHTML = "Anzahl an schriftlichen Noten:";
+            noog.innerHTML = "Anzahl an mündlichen Noten:";
+            novg.innerHTML = "Anzahl an Vokabeltest Noten:";
+            sgiyb.innerHTML = "Noten im Browser speichern?";
+            sgiyb.title = "Dies verwendet JavaScripts lokalen Speicher!"
+            cn.value = "Erstellen";
+
+            saved_subjects_btn.innerHTML = "Gespeicherte Schulfächer";
+            nos.placeholder = "Schulfachname"
+            break;
+    
+        default:
+            break;
+    }
+}
