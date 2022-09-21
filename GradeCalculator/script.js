@@ -5,7 +5,7 @@ var xx_grades = [
 ]
 var gotVariables = false;
 var DATA_SAVED_SUBJECTS = "";
-var DATA_CURRENT_SUBJET = "default";
+var DATA_CURRENT_SUBJET = "Default";
 var subjects = [];
 var subjects_name = [];
 var g = document.getElementById("_g");
@@ -133,36 +133,34 @@ setInterval(function () {
     var prefix = "?";
 
     temp_string += prefix + "percentage=" + slider_percentage.value;
-    if (grades.value > 0) {
-        temp_string += prefix + "grades=[";
-        for (let index = 0; index < grades.value; index++) {
-            const element = findEById("grades_", index).value;
-            temp_string += element;
-            temp_string += ","
-        }
-        temp_string = temp_string.slice(0, temp_string.length - 1);
-        temp_string += "]";
+
+    temp_string += prefix + "grades=[";
+    for (let index = 0; index < grades.value; index++) {
+        const element = findEById("grades_", index).value;
+        temp_string += element;
+        temp_string += ","
     }
-    if (o_grades.value > 0) {
-        temp_string += prefix + "ogrades=[";
-        for (let index = 0; index < o_grades.value; index++) {
-            const element = findEById("ogradeso_", index).value;
-            temp_string += element;
-            temp_string += ","
-        }
-        temp_string = temp_string.slice(0, temp_string.length - 1);
-        temp_string += "]";
+    temp_string = temp_string.slice(0, temp_string.length - 1);
+    temp_string += "]";
+
+    temp_string += prefix + "ogrades=[";
+    for (let index = 0; index < o_grades.value; index++) {
+        const element = findEById("ogradeso_", index).value;
+        temp_string += element;
+        temp_string += ","
     }
-    if (v_grades.value > 0) {
-        temp_string += prefix + "vgrades=[";
-        for (let index = 0; index < v_grades.value; index++) {
-            const element = findEById("vgradesv_", index).value;
-            temp_string += element;
-            temp_string += ","
-        }
-        temp_string = temp_string.slice(0, temp_string.length - 1);
-        temp_string += "]";
+    temp_string = temp_string.slice(0, temp_string.length - 1);
+    temp_string += "]";
+
+    temp_string += prefix + "vgrades=[";
+    for (let index = 0; index < v_grades.value; index++) {
+        const element = findEById("vgradesv_", index).value;
+        temp_string += element;
+        temp_string += ","
     }
+    temp_string = temp_string.slice(0, temp_string.length - 1);
+    temp_string += "]";
+
     //replace url
     //history.replaceState({ id: 'Grade Calculator', source: 'JS' }, "Grade Calculator", temp_string);
 
@@ -170,8 +168,8 @@ setInterval(function () {
     if (save_localstorage.checked == true) {
         //document.cookie = temp_string;
         localStorage.setItem(DATA_CURRENT_SUBJET, temp_string);
-        localStorage.setItem("__subjects","?subjects=["+subjects_name.toString()+"]")
-        localStorage.setItem("__localstorage","true");
+        localStorage.setItem("__subjects", "?subjects=[" + subjects_name.toString() + "]")
+        localStorage.setItem("__localstorage", "true");
         saved_subjects_btn.hidden = false;
     } else {
         localStorage.removeItem("__localstorage");
@@ -220,9 +218,9 @@ function writeEById(prefix, id, value) {
 }
 
 
-function loadData(v) {
+function loadData(va) {
     //var v = window.location.search.split("?");
-    v = localStorage.getItem(v);
+    v = localStorage.getItem(va);
     if (v == null) {
         v = "?percentage=50?grades=[]?ogrades=[]?vgrades=[]";
     }
@@ -232,8 +230,19 @@ function loadData(v) {
         switch (e[0]) {
             case "percentage":
                 slider_percentage.value = e[1];
+
+                //MARK URRENTLY ACTIVE SUBJECT
+                var children = [].slice.call(saved_subjects.getElementsByTagName("button"));
+                children.forEach(element => {
+                    if(element.innerHTML == va){
+                        element.style="background-color:#f00a;";
+                    }else{
+                        element.style="";
+                    }
+                });
                 break;
             case "grades":
+                document.title = va + " - GradeCalculator";
                 var f = e[1].replace("[", "").replace("]", "").split(",");
                 if (f[0] == "" && f.length == 1) { f = [] }
                 grades.value = f.length;
@@ -293,6 +302,9 @@ function createSubject(name) {
             //btn.addEventListener("click",switch_subject)
             btn.setAttribute("onclick", "switch_subject(\"" + name + "\");")
             saved_subjects.appendChild(btn);
+
+            switch_subject(name);
+            nos.value = "";
         }
     }
 
@@ -319,11 +331,12 @@ function switch_subject(a) {
 
 createSubject("Default");
 loadData(DATA_CURRENT_SUBJET);
+switch_subject("Default");
 
 
 translateTexts(userLang);
 
-function translateTexts(userLang){
+function translateTexts(userLang) {
     var nog = document.getElementById("*TEXT*nog");
     var noog = document.getElementById("*TEXT*noog");
     var novg = document.getElementById("*TEXT*novg");
@@ -340,9 +353,9 @@ function translateTexts(userLang){
             cn.value = "Erstellen";
 
             saved_subjects_btn.innerHTML = "Gespeicherte Schulfächer";
-            nos.placeholder = "Schulfachname"
+            nos.placeholder = "Schulfachname";
             break;
-    
+
         default:
             break;
     }
