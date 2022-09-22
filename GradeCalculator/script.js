@@ -235,7 +235,7 @@ function loadData(va) {
                 var children = [].slice.call(saved_subjects.getElementsByTagName("button"));
                 children.forEach(element => {
                     if(element.innerHTML == va){
-                        element.style="background-color:#f00a;";
+                        element.style="background-color:#006969;color:#fff;";
                     }else{
                         element.style="";
                     }
