@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <title>Voleyball Counter</title>
+</head>
+
+<body>
+    <input type="text" id="textId" style="width:0;" onfocusout='document.getElementById("textId").focus()' keydown='keyInput()'></input>
+    <input type="range" id="max_p" onchange="fmax_p()" max="25" min="15" value="25">
+    <a id="max_pa">25</a>
+    <div id="d" class="d1">
+        <a id="t1">0</a>
+        <a>:</a>
+        <a id="t2">0</a>
+    </div>
+    <div id="e" class="e1">
+        <a id="e1">0</a>
+        <a>:</a>
+        <a id="e2">0</a>
+    </div>
+    <div class="help1">
+        <div id="help1" class="team1_p">
+            <a id="help1_">+1<br></a>
+            <a>1</a>
+        </div>
+        <div id="help2" class="team2_p">
+            <a id="help2_">+1<br></a>
+            <a>2</a>
+        </div>
+    </div>
+    <div class="help2">
+        <div class="team3_p">
+            <a>Switch Teams</a>
+            <a>⇆</a>
+        </div>
+        <div id="_2help1" class="team1_p">
+            <a id="_2help1_">-1<br></a>
+            <a>Q</a>
+        </div>
+        <div id="_2help2" class="team2_p">
+            <a id="_2help2_">-1<br></a>
+            <a>W</a>
+        </div>
+    </div>
+
+    <div class="bottom_right">
+        <a id="time"></a>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
