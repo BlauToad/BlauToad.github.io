@@ -30,6 +30,11 @@ points_team1 = 0;
 points_team2 = 0;
 fpoints_team1 = 0;
 fpoints_team2 = 0;
+points_team1_last = 0;
+points_team2_last = 0;
+fpoints_team1_last = 0;
+fpoints_team2_last = 0;
+
 
 function myFunction(event) {
 
@@ -58,9 +63,32 @@ function myFunction(event) {
             temp = fpoints_team1;
             fpoints_team1 = fpoints_team2;
             fpoints_team2 = temp;
+            temp = points_team1_last;
+            points_team1_last = points_team2_last;
+            points_team2_last = temp;
             updatefPoints();
 
             switchColors();
+            break;
+        case 8:
+            //revert to last before point
+            temp = points_team1;
+            points_team1 = points_team1_last;
+            points_team1_last = temp;
+
+            temp = points_team2;
+            points_team2 = points_team2_last;
+            points_team2_last = temp;
+            
+            temp = fpoints_team1;
+            fpoints_team1 = fpoints_team1_last;
+            fpoints_team1_last = temp;
+
+            temp = fpoints_team2;
+            fpoints_team2 = fpoints_team2_last;
+            fpoints_team2_last = temp;
+            
+            updatefPoints();
             break;
         default:
             console.log(event.key, event.keyCode);
@@ -69,12 +97,20 @@ function myFunction(event) {
     if (points_team1 < 0) { points_team1 = 0 }
     if (points_team2 < 0) { points_team2 = 0 }
     if (points_team1 >= max_p.value && points_team1 - 1 > points_team2) {
+        points_team1_last = points_team1-1;
+        points_team2_last = points_team2;
+        fpoints_team1_last = fpoints_team1;
+        fpoints_team2_last = fpoints_team2;
         points_team1 = 0;
         points_team2 = 0;
         fpoints_team1 += 1;
         updatefPoints();
     }
     if (points_team2 >= max_p.value && points_team2 - 1 > points_team1) {
+        points_team1_last = points_team1;
+        points_team2_last = points_team2-1;
+        fpoints_team1_last = fpoints_team1;
+        fpoints_team2_last = fpoints_team2;
         points_team1 = 0;
         points_team2 = 0;
         fpoints_team2 += 1;
@@ -183,3 +219,30 @@ function addZero(i) {
     if (i < 10) {i = "0" + i}
     return i;
   }
+
+function click(key){
+    let e = {
+        keyCode: key
+    }
+    myFunction(e);
+}
+
+function team1_plus1 (){
+    click(49);
+}
+
+function team2_plus1() {
+    click(50);
+}
+
+function team1_minus1(){
+    click(81);
+}
+
+function team2_minus1(){
+    click(87);
+}
+
+function switchTeams(){
+    click(9);
+}
