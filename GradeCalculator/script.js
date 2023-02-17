@@ -231,7 +231,7 @@ function loadData(va) {
             case "percentage":
                 slider_percentage.value = e[1];
 
-                //MARK URRENTLY ACTIVE SUBJECT
+                //MARK CURRENTLY ACTIVE SUBJECT
                 var children = [].slice.call(saved_subjects.getElementsByTagName("button"));
                 children.forEach(element => {
                     if(element.innerHTML == va){
@@ -269,7 +269,6 @@ function loadData(va) {
             case "subjects":
                 var f = e[1].replace("[", "").replace("]", "").split(",");
                 if (f[0] == "" && f.length == 1) { f = [] }
-                v_grades.value = f.length;
                 for (let index = 0; index < f.length; index++) {
                     createSubject(f[index]);
                 }
