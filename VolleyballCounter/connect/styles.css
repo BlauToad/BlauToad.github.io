@@ -7,20 +7,14 @@ div {
     text-align: center;
 }
 
-.d1 {
+#info {
     margin-top: -4vw;
+    padding-top: 4vw;
 }
 
 
-.d1 * {
-    font-size: 38vw;
-}
-.d2 * {
-    font-size: 26vw;
-}
-
-.e1{
-    font-size: 12vw;
+#info * {
+    font-size: 5vw;
 }
 
 .team1_p{

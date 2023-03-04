@@ -1,3 +1,8 @@
+var s = window.location.search;
+if (!s.startsWith("?id=")) {
+    window.location = window.location.protocol + window.location.host + "/VolleyballCounter/";
+    stop();
+}
 var i = document.getElementById("textId");
 var d = document.getElementById("d");
 var e = document.getElementById("e");
@@ -24,22 +29,7 @@ var _qrcode = document.getElementById("qrcode");
 
 var time = document.getElementById("time");
 
-
 focus_i();
-
-function focus_i(){
-    if(navigator.userAgent.match(/Android/i)
-    || navigator.userAgent.match(/webOS/i)
-    || navigator.userAgent.match(/iPhone/i)
-    || navigator.userAgent.match(/iPad/i)
-    || navigator.userAgent.match(/iPod/i)
-    || navigator.userAgent.match(/BlackBerry/i)
-    || navigator.userAgent.match(/Windows Phone/i)){
-        console.log("Mobile!")
-    }else{
-        i.focus();
-    }
-}
 
 i.addEventListener("keydown", myFunction);
 
@@ -55,6 +45,7 @@ var points_to_win = 25;
 
 
 function myFunction(event) {
+    send("click_"+event.keyCode);
 
     switch (event.keyCode) {
         case 49:
@@ -136,7 +127,6 @@ function myFunction(event) {
     }
 
     updatePoints();
-
     i.value = "";
 
     return false;
@@ -262,61 +252,58 @@ function switchTeams(){
     click(9);
 }
 
+var dest_id = null;
+
+dest_id = decodeURI(s.split("&")[0].slice(4));
+
 var peer = new Peer();
 
 var peer_id = null;
 
-var conn = [];
-var conns_left = 0;
+var conn = null;
 
-peer.on('open', function(id) {
+peer.on('open', function (id) {
     peer_id = id;
-});
 
-peer.on('connection', function(co) {
-    conn.push(co);
-    console.log('Connected!');
-    hide_qr();
+    conn = peer.connect(dest_id);
+
+    conn.on('open', conn_open);
+    conn.on('error', conn_error);
+    conn.on('close', conn_close);
+    conn.on('data', conn_data);
     
-    co.on('data', conn_data);
-    co.on('open', conn_open);
 });
 
-function conn_data(data){
-    if(String(data).startsWith("click_")){
-        click(Number(String(data).slice(6)));
-    }else{
-        console.log('Received', data);
-    }
-}
+peer.on('error', function(err) {
+    _status.style = "color: #f00;";
+    _status.innerHTML = "✖";
+    conn = null;
+});
+
 function conn_open(){
-    show_conn_status();
-}
-function conn_error(){
-    conns_left++;
-    show_conn_status();
+    _status.style = "color: #0f0;";
+    _status.innerHTML = "✔";
 }
 function conn_close(){
-    conns_left++;
-    show_conn_status();
+    _status.style = "color: #f00;";
+    _status.innerHTML = "✖";
+    conn = null;
 }
-
-function show_conn_status(){
-    var s = conn.length;
-    switch (s) {
-        case 0:
-            _status.style = "color: #f00;";
-            _status.innerHTML = "✖";
-            break;
-        case 1:
-            _status.style = "color: #0f0;";
-            _status.innerHTML = "✔";
-            break;
-    
-        default:
-            _status.style = "color: #0f0;";
-            _status.innerHTML = s;
-            break;
+function conn_error(){
+    _status.style = "color: #f00;";
+    _status.innerHTML = "✖";
+    conn = null;
+}
+function conn_data(data){
+    if(String(data).startsWith("set_var")){
+        var d = String(data).slice(7).split("|");
+        eval(d[0] + " = " + d[1]);
+    }else if(String(data) == "update"){
+        updatefPoints();
+        updatePoints();
+        updateColors();
+    }else{
+        console.log('Received', data);
     }
 }
 
@@ -334,39 +321,37 @@ function makeCode (_string) {
 }
 
 function connection(){
-    if(peer_id != null){
-        _status.style = "color: #fb0;";
-        _status.innerHTML = "↻";
-        makeCode(window.location.protocol + "//" + window.location.host + "/VolleyballCounter/connect/?id="+encodeURI(peer_id));
+    if(conn != null){
+        var h = window.location.host;
+        h = h.replace("localhost","192.168.1.136");
+        makeCode(window.location.protocol + "//" + h + "/VolleyballCounter/connect/?id="+encodeURI(conn.peer));
         _qrcode.style = "display: block;";
     }
 }
+
 
 function hide_qr(){
     _qrcode.style = "display: none;";
 }
 
-function send_current_state(){
-    send_all("set_var"+"points_team1"+"|"+points_team1);
-    send_all("set_var"+"points_team2"+"|"+points_team2);
-    send_all("set_var"+"fpoints_team1"+"|"+fpoints_team1);
-    send_all("set_var"+"fpoints_team2"+"|"+fpoints_team2);
-    send_all("set_var"+"points_team1_last"+"|"+points_team1_last);
-    send_all("set_var"+"points_team2_last"+"|"+points_team2_last);
-    send_all("set_var"+"fpoints_team1_last"+"|"+fpoints_team1_last);
-    send_all("set_var"+"fpoints_team2_last"+"|"+fpoints_team2_last);
-    send_all("set_var"+"points_to_win"+"|"+points_to_win);
-    send_all("set_var"+"c1"+"|"+c1);
-    send_all("set_var"+"c2"+"|"+c2);
-    setTimeout(() => {
-        send_all("update");
-    }, 100);
+function send(data){
+    if(conn != null){
+        conn.send(data);
+    }
 }
 
-function send_all(data){
-    conn.forEach(e => {
-        e.send(data);
-    });
-}
+var mobile_users = [];
 
-setInterval(send_current_state, 2000);
+function focus_i(){
+    if(navigator.userAgent.match(/Android/i)
+    || navigator.userAgent.match(/webOS/i)
+    || navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+    || navigator.userAgent.match(/BlackBerry/i)
+    || navigator.userAgent.match(/Windows Phone/i)){
+        console.log("Mobile!")
+    }else{
+        i.focus();
+    }
+}
