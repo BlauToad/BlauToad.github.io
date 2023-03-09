@@ -297,7 +297,11 @@ function conn_error(){
 function conn_data(data){
     if(String(data).startsWith("set_var")){
         var d = String(data).slice(7).split("|");
-        eval(d[0] + " = '" + d[1] + "'");
+        var v = d[1];
+        if(v != Number(v)){
+            v = "'"+v+"'";
+        }
+        eval(d[0] + " = " + v);
     }else if(String(data) == "update"){
         updatefPoints();
         updatePoints();
@@ -339,8 +343,6 @@ function send(data){
         conn.send(data);
     }
 }
-
-var mobile_users = [];
 
 function focus_i(){
     if(navigator.userAgent.match(/Android/i)
