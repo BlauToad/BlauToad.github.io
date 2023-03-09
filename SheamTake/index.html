@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="../GradeCalculator/dropdown.css">
+    <title>Sheam Take</title>
+</head>
+<body><div class="big">
+    <div class="scib">
+        <a id="*TEXT*sgiyb" title="This will use your Browsers local storage!" style="cursor: help;">Save Namelists in your Browser?</a>
+        <input type="checkbox" id="_save_localstorage">
+        <br>
+        <br>
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <button class="dropbtn" id="_saved_names_btn" hidden>Saved Namelists</button>
+            <div class="dropdown-content" id="_saved_names">
+                <form onsubmit="create_new_saved_subject(); return false;">
+                    <div style="display: flex;">
+                        <input type="text" id="_non" placeholder="Name of new namelist" required>
+                        <input type="submit" id="*TEXT*cn" value="Create new"></button>
+                    </div>
+                </form>
+            </div>
+            <br>
+        </div>
+        <br>
+        <!-- Dropdown -->
+    </div>
+    <br>
+    <br>
+    <div class="outer">
+        <div>
+            <a id="*TEXT*nog">Names:</a>
+            <input id="_nr_names" title="Nr. of Names" type="number" value="0" min="0" max="69">
+            <br><br>
+            <div id="_n">
+            </div>
+        </div>
+        <div>
+            <a id="*TEXT*noog">Number of Teams:</a>
+            <input id="_nr_teams" title="Nr. of Teams" type="number" value="0" min="0" max="0" oninput="generateTeams()">
+            <br><br>
+            <button title="Generate new teams" onclick="generateTeams()">Generate new teams</button>
+            <br><br>
+            <a id="_teams"></a>
+            
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -4,7 +4,6 @@ var xx_grades = [
     []
 ]
 var gotVariables = false;
-var DATA_SAVED_SUBJECTS = "";
 var DATA_CURRENT_SUBJET = "Default";
 var subjects = [];
 var subjects_name = [];
@@ -312,6 +311,7 @@ function createSubject(name) {
 {
     if (localStorage.getItem("__localstorage") == "true") {
         save_localstorage.checked = true;
+        saved_subjects_btn.hidden = false;
         loadData("__subjects");
     }
 }
