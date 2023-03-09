@@ -297,7 +297,7 @@ function conn_error(){
 function conn_data(data){
     if(String(data).startsWith("set_var")){
         var d = String(data).slice(7).split("|");
-        eval(d[0] + " = " + d[1]);
+        eval(d[0] + " = '" + d[1] + "'");
     }else if(String(data) == "update"){
         updatefPoints();
         updatePoints();
