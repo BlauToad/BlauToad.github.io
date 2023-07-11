@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sporttag 2023</title>
+    <link rel="shortcut icon" href="#">
+    <style>
+        * {
+            font-family: Verdana, sans-serif;
+            color: #000;
+            background-color: fff;
+            border-color: #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            width: 50%;
+            vertical-align: top;
+        }
+
+        td * {
+            width: 100%;
+        }
+
+        td input {
+            width: 99%;
+        }
+
+        textarea {
+            resize: vertical;
+            width: 99%;
+        }
+
+        .border-left {
+            padding-left: 10px;
+            border-left-style: solid;
+            border-left-width: 2px;
+            border-left-color: #000;
+        }
+
+        .border-top {
+            padding-top: 10px;
+            border-top-style: solid;
+            border-top-width: 2px;
+            border-top-color: #000;
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            * {
+                color: #fff;
+                background-color: #000;
+                border-color: #fff;
+            }
+
+            .border-left {
+                border-left-color: #fff;
+            }
+
+            .border-top {
+                border-top-color: #fff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <div>
+                    <!--[Punkte]-->
+                    <h3>Punkte:</h3>
+                    <label for="klassen">Klasse:</label>
+                    <select id="klassen"></select>
+                    <br>
+                    <a id="stand"></a>
+                    <br>
+
+                    <label for="punkte">Punkte ändern um:</label>
+                    <input type="number" value="0" id="punkte" />
+                    <br>
+                    <label for="kommentar">Grund:</label>
+                    <textarea id="kommentar" placeholder="Punkte ändern geklickt"></textarea>
+                    <br>
+                    <label for="add_punkte">Punkte ändern:</label>
+                    <button id="add_punkte">Ändern!</button>
+                    <!--[Punkte]-->
+                </div>
+            </td>
+            <td class="border-left">
+                <div>
+                    <!--[Platzierung]-->
+                    <h3>Platzierung:</h3>
+                    <label for="stufe_p">Stufe:</label>
+                    <select id="stufe_p"></select>
+                    <a id="display"></a>
+                    <!--[Platzierung]-->
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="border-top">
+                <div>
+                    <!--[Spiel]-->
+                    <h3>Spiel:</h3>
+                    <label for="stufe">Stufe:</label>
+                    <select id="stufe"></select>
+                    <br>
+                    <label for="platz1">1. Platz:</label>
+                    <select id="platz1">
+                        <option value=""></option>
+                    </select>
+                    <br>
+                    <label for="platz2">2. Platz:</label>
+                    <select id="platz2" disabled="true">
+                        <option value=""></option>
+                    </select>
+                    <br>
+                    <label for="platz3">3. Platz:</label>
+                    <select id="platz3" disabled="true">
+                        <option value=""></option>
+                    </select>
+                    <br>
+                    <label for="platz4">4. Platz:</label>
+                    <select id="platz4" disabled="true">
+                        <option value=""></option>
+                    </select>
+                    <br>
+                    <label for="add_game_punkte">Spielpunkte hinzufügen:</label>
+                    <button id="add_game_punkte">Hinzufügen!</button>
+                    <!--[Spiel]-->
+                </div>
+            </td>
+            <td class="border-left border-top">
+                <div>
+                    <!--[Punkte-Verlauf]-->
+                    <h3>Verlauf:</h3>
+                    <label for="klassen_v">Klasse:</label>
+                    <select id="klassen_v"></select>
+                    <a id="display_v"></a>
+                    <!--[Punkte-Verlauf]-->
+                </div>
+            </td>
+        </tr>
+    </table>
+    <canvas id="myChart" style="width:100%;background-color: #fff;"></canvas>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
