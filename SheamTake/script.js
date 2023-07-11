@@ -11,6 +11,7 @@ var saved_namelists = document.getElementById("_saved_names");
 var saved_namelists_btn = document.getElementById("_saved_names_btn");
 var non = document.getElementById("_non");
 var teams_text = document.getElementById("_teams");
+var mode_ = document.getElementById("mode");
 
 var userLang = navigator.language || navigator.userLanguage;
 
@@ -225,15 +226,27 @@ function generateTeams(){
         nr_teams.value = nr_teams.min;
     }
     var teams = []
-    for(i = 0; i < nr_teams.value; i++){
+    // Mode 1:
+    if(!mode_.checked){
+        for(i = 0; i < nr_teams.value; i++){
+            teams.push([]);
+        }
+        var j = 0;
+        while(an.length != 0){
+            i = j % teams.length;
+            var r = Math.floor(Math.random() * an.length);
+            teams[i].push(an.splice(r,1));
+            j++;
+        }
+    }else{
         teams.push([]);
-    }
-    var j = 0;
-    while(an.length != 0){
-        i = j % teams.length;
-        var r = Math.floor(Math.random() * an.length);
-        teams[i].push(an.splice(r,1));
-        j++;
+        while(an.length != 0){
+            if(teams[teams.length-1].length == nr_teams.value){
+                teams.push([]);
+            }
+            var r = Math.floor(Math.random() * an.length);
+            teams[teams.length-1].push(an.splice(r,1));
+        }
     }
 
     var tt = "";
