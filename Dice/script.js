@@ -1,7 +1,7 @@
 // BIGGER
 b = 1;
 const z = location.search.slice(1);
-b = window.innerWidth / (z.length * 334);
+b = window.innerWidth / (z.length * 334 /2.67);
 
 // Margin to the Border
 const m1 = 12 * b;
