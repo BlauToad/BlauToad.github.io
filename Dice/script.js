@@ -1,5 +1,7 @@
 // BIGGER
-const b = 2;
+b = 1;
+const z = location.search.slice(1);
+b = window.innerWidth / (z.length * 334);
 
 // Margin to the Border
 const m1 = 12 * b;
@@ -27,13 +29,13 @@ const numbers = {
     9: [9]
 }
 
-const z = location.search.slice(1);
-if(!isNaN(z)){
+
+if (!isNaN(z)) {
     drawNumber(z);
 }
 
+
 function drawNumber(number) {
-    console.log(String(number).length);
     var nums = [];
     var end = String(number).length;
     for (let i = 0; i < end; i++) {
@@ -43,7 +45,7 @@ function drawNumber(number) {
     }
     var nx = [];
     let j = 0;
-    for (let i = nums.length-1; i >= 0; i--) {
+    for (let i = nums.length - 1; i >= 0; i--) {
         nx[j] = nums[i];
         j++;
     }
