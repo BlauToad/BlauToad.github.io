@@ -1,7 +1,7 @@
 // BIGGER
 b = 1;
 const z = location.search.slice(1);
-b = window.innerWidth / (z.length * 334 /2.67);
+b = window.innerWidth / (z.length * 334 /2.65);
 
 // Margin to the Border
 const m1 = 12 * b;
@@ -74,7 +74,7 @@ function drawNum(canvas, number) {
 
     // Dots:
     var on = true;
-    var pattern = numbers[number];
+    var pattern = Array.from(numbers[number]);
     var i = 0;
     while (pattern.length != 0) {
         if (on && pattern[0] > 0) {
