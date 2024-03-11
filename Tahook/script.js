@@ -1,108 +1,60 @@
-
-var _status = document.getElementById("status");
 var _qrcode = document.getElementById("qrcode");
+const _url_pin = document.getElementById("url_pin");
+const _info_one = document.getElementById("info_one");
 
-var peer = new Peer();
-
-var peer_id = null;
-
-var conn = [];
-var conns_left = 0;
-
-peer.on('open', function (id) {
-    peer_id = id;
-});
-
-peer.on('connection', function (co) {
-    conn.push(co);
-    console.log('Connected!');
-    hide_qr();
-
-    co.on('data', conn_data);
-    co.on('open', conn_open);
-});
-
-function conn_data(data) {
-    if (String(data).startsWith("click_")) {
-        click(Number(String(data).slice(6)));
-    } else {
-        console.log('Received', data);
-    }
-}
-function conn_open() {
-    show_conn_status();
-}
-function conn_error() {
-    conns_left++;
-    show_conn_status();
-}
-function conn_close() {
-    conns_left++;
-    show_conn_status();
+function execute_dynamic(script) {
+    const s = document.createElement("script");
+    s.src = "./" + script;
+    document.body.appendChild(s);
+    s.remove();
 }
 
-function show_conn_status() {
-    var s = conn.length;
-    switch (s) {
-        case 0:
-            _status.style = "color: #f00;";
-            _status.innerHTML = "✖";
-            break;
-        case 1:
-            _status.style = "color: #0f0;";
-            _status.innerHTML = "✔";
-            break;
-
-        default:
-            _status.style = "color: #0f0;";
-            _status.innerHTML = s - conns_left;
-            break;
-    }
+function setSafeText(element, text) {
+    element.innerHTML = "";
+    var t = document.createTextNode(text);
+    element.appendChild(t);
 }
+execute_dynamic("types/game.js");
 
-var qrcode = new QRCode(_qrcode, {
-    text: "",
-    width: 50 * window.innerWidth / 100,
-    height: 50 * window.innerWidth / 100,
-    colorDark: "#000000",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.H
-});
-
-function makeCode(_string) {
-    console.log(_string)
-    qrcode.makeCode(_string);
-}
-
-function connection() {
-    if (peer_id != null) {
-        //_status.style = "color: #fb0;";
-        //_status.innerHTML = "↻";
-        var h = window.location.host;
-        makeCode(window.location.protocol + "//" + h + "/Tahook/connect/?id=" + encodeURI(peer_id));
-        _qrcode.style = "display: block;";
-
-    }
-}
-
-function hide_qr() {
+_qrcode.addEventListener("click", () => {
     _qrcode.style = "display: none;";
-}
+});
 
-function send_all(data) {
-    conn.forEach(e => {
-        e.send(data);
+setTimeout(() => {
+
+    game = new Game((e) => { setSafeText(_info_one, "☺" + e) });
+
+    var qrcode = new QRCode(_qrcode, {
+        text: "",
+        width: 50 * window.innerWidth / 100,
+        height: 50 * window.innerWidth / 100,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
     });
-}
 
-
-function calculate_points(time_spend_ms=Infinity,total_time_ms=30000,total_points=1000){
-    if(time_spend_ms <= 500){
-        return total_points;
+    function makeCode(_string) {
+        console.log(_string)
+        qrcode.makeCode(_string);
     }
-    var a = time_spend_ms / total_time_ms;
-    a /= 2;
-    a = 1 - a;
-    var b = a * total_points;
-    return Math.ceil(b);
-}
+
+    function calculate_points(time_spend_ms = Infinity, total_time_ms = 30000, total_points = 1000) {
+        if (time_spend_ms <= 500) {
+            return total_points;
+        }
+        var a = time_spend_ms / total_time_ms;
+        a /= 2;
+        a = 1 - a;
+        var b = a * total_points;
+        return Math.ceil(b);
+    }
+
+    _url_pin.addEventListener("click", () => {
+        if (game.peer_id != null) {
+            var h = window.location.host;
+            makeCode(window.location.protocol + "//" + h + "/Tahook/connect/?id=" + encodeURI(game.peer_id));
+            _qrcode.style = "display: block;";
+
+        }
+    });
+}, 1000);
