@@ -8,6 +8,13 @@
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
+    <script>
+        const pickerOptions = { onEmojiSelect: (em)=>{console.log(em.native);picker.remove();document.body.appendChild(document.createTextNode(em.native))}, categories: ["people", "nature", "foods", "activity", "places", "objects"],previewPosition:"none",searchPosition:"none" }
+        const picker = new EmojiMart.Picker(pickerOptions)
+
+        document.body.appendChild(picker)
+    </script>
     <div class="help3">
         <div class="connection" onclick="connection()">
             <a id="status" style="color: #fb0;">↻</a>

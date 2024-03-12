@@ -2,10 +2,11 @@ var _qrcode = document.getElementById("qrcode");
 const _url_pin = document.getElementById("url_pin");
 const _info_one = document.getElementById("info_one");
 
-function execute_dynamic(script) {
+function execute_dynamic(script,function_onload) {
     const s = document.createElement("script");
     s.src = "./" + script;
     document.body.appendChild(s);
+    s.addEventListener("load",function_onload);
     s.remove();
 }
 
@@ -14,13 +15,8 @@ function setSafeText(element, text) {
     var t = document.createTextNode(text);
     element.appendChild(t);
 }
-execute_dynamic("types/game.js");
-
-_qrcode.addEventListener("click", () => {
-    _qrcode.style = "display: none;";
-});
-
-setTimeout(() => {
+execute_dynamic("types/game.js",()=>{
+    
 
     game = new Game((e) => { setSafeText(_info_one, "☺" + e) });
 
@@ -57,4 +53,8 @@ setTimeout(() => {
 
         }
     });
-}, 1000);
+});
+
+_qrcode.addEventListener("click", () => {
+    _qrcode.style = "display: none;";
+});

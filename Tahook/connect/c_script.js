@@ -48,19 +48,8 @@ function conn_error(){
     conn = null;
 }
 function conn_data(data){
-    if(String(data).startsWith("set_var")){
-        var d = String(data).slice(7).split("|");
-        var v = d[1];
-        if(v != Number(v)){
-            v = "'"+v+"'";
-        }
-        eval(d[0] + " = " + v);
-    }else if(String(data) == "update"){
-        updatefPoints();
-        updatePoints();
-        updateColors();
-    }else{
-        console.log('Received', data);
+    if(data === "ping"){
+        conn.send("pong#"+ Date.now()); 
     }
 }
 
@@ -95,3 +84,6 @@ function send(data){
         conn.send(data);
     }
 }
+window.addEventListener('beforeunload', function (e) {
+    peer.destroy();
+});
