@@ -1,0 +1,16 @@
+{
+    "title": "Test Question",
+    "read_time_ms": 5000,
+    "answering_time_ms": 30000,
+    "points_factor": 1,
+    "answers": [
+        {
+            "text": "Wrong Answer 1"
+        },
+        {
+            "text": "Right Answer",
+            "is_right": true
+        }
+    ],
+    "random_order": false
+}
