@@ -1,10 +1,31 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pssst!</title>
 </head>
+
 <body>
-    <h1 style="text-align: center;margin-top: 25vh;font-size: 25vh;">🤫</h1>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+    </style>
+    <h1 id="aa" style="text-align: center;margin-top: 25vh;font-size: 20vh;">🤫</h1>
+    <script>
+        const aa = document.getElementById("aa");
+
+        const targetDate = new Date(2024, 6, 13); // Set the target date as July 13, 2024
+        const currentDate = new Date(); // Get the current date
+
+        const oneDay = 1000 * 60 * 60 * 24; // Calculate the number of milliseconds in one day
+
+        const timeDifference = targetDate - currentDate; // Calculate the difference in milliseconds between the target and current dates
+
+        const daysDifference = Math.ceil(timeDifference / oneDay); // Calculate the number of days between the two dates
+        aa.innerHTML = "Noch " + daysDifference + " Tag" + (daysDifference == 1 ? "" : "e") + "!";
+    </script>
 </body>
+
 </html>
